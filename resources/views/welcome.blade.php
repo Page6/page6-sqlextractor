@@ -84,7 +84,7 @@
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Loginin</a>
-                    <a href="https://laracasts.com">Extractor</a>
+                    <a href="{{ url('/extractor') }}">Extractor</a>
                     <a href="https://laravel-news.com">Record</a>
                     <a href="https://forge.laravel.com">Loginout</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
