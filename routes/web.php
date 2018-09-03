@@ -17,3 +17,7 @@ Route::get('/', function () {
 });
 
 Route::get('/extractor', 'ExtractorController@extract');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -72,7 +72,7 @@
                         <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        <!-- <a href="{{ route('register') }}">Register</a> -->
                     @endauth
                 </div>
             @endif
@@ -83,11 +83,9 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Loginin</a>
-                    <a href="{{ url('/extractor') }}">Extractor</a>
+                    <!--<a href="{{ url('/extractor') }}">Extractor</a>
                     <a href="https://laravel-news.com">Record</a>
-                    <a href="https://forge.laravel.com">Loginout</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a>-->
                 </div>
             </div>
         </div>
