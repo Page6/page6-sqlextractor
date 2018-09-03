@@ -18,7 +18,7 @@
                 </div>
                 <div class="links panel-body">
                     <a href="{{ url('/extractor') }}"><h1>Extractor</h1></a>
-                    <a href="https://laravel-news.com"><h1>Record</h1></a>
+                    <a href="{{ url('/record') }}"><h1>Record</h1></a>
                     <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
                 </div>
             </div>

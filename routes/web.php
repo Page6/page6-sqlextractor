@@ -18,6 +18,8 @@ Route::get('/', function () {
 
 Route::get('/extractor', 'ExtractorController@extract');
 
+Route::get('/record', 'RecordController@record');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
