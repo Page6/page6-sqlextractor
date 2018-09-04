@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //utf8mb4: 
+        //For those running MariaDB or older versions of MySQL 
+        //you may hit error when trying to run migrations
+        Schema::defaultStringLength(191);
     }
 
     /**
