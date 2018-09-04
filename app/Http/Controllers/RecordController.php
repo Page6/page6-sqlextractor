@@ -15,7 +15,8 @@ class RecordController extends Controller
      * record sql query
      */
     public function record() {
-    	//dd(DB::getQueryLog());
-    	dd(Auth::user()->name);
+    	$records = DB::select('select * from records');
+
+    	return view('record', ['records'=>$records]);
     }
 }
