@@ -20,7 +20,7 @@ class ExtractorController extends Controller
         $employees = \DB::table('employees')->get();
 
         $log = \DB::getQueryLog()[0]['query'];
-        $record=array('user'=>Auth::user()->name,'sql'=>$log,'extracted_at'=>date('Y-m-d h:i:s',time()));
+        $record=array('user'=>Auth::user()->name,'sql'=>$log,'extracted_at'=>date('Y-m-d H:i:s',time()));
         $result = \DB::table('records')->insert($record);
 
     	return view('extractor', ['employees'=>$employees]);
