@@ -54,6 +54,15 @@ class ExtractorController extends Controller
           GROUP BY b.name
           ORDER BY b.name");
 
+      $key_fee = 0;
+      foreach ($results_visit as $key => $value) {
+        # code...
+        while ($value->科室 <> $results_fee[$key_fee]->科室) {
+          $key_fee++;
+        }
+        $value->总费用 = $results_fee[$key_fee]->总费用;
+      }
+
       $results = $results_visit;
       dd($results);
 
