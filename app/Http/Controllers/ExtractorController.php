@@ -17,7 +17,7 @@ class ExtractorController extends Controller
     public function extract() {
     	//\DB::enableQueryLog();
     	//$employees = DB::select('select * from employee');
-        $employees = \DB::table('employees')->get();
+        $employees = \DB::connection('mysql_page6')->table('employees')->get();
 
         //$log = \DB::getQueryLog()[0]['query'];
         $record=array('user'=>Auth::user()->name,'sql'=>'extract-select','extracted_at'=>date('Y-m-d H:i:s',time()));
