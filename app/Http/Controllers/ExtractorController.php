@@ -18,6 +18,11 @@ class ExtractorController extends Controller
     	//\DB::enableQueryLog();
     	$employees = \DB::select('select * from employees');
       //$employees = \DB::connection('mysql_page6')->table('employees')->get();
+      
+      /**
+      * 按科室（按临床考核细分）统计：
+      * 挂号人次 | 总费用 | 次均费用 | 次均药费 | 次均材料费 | 药占比 | 材料占比
+      */
       $results_visit = \DB::connection('mysql_page6')->select("SELECT b.name 科室, COUNT(a.patient_id) 挂号人次
           FROM mz_visit_table a, unit_code b
           WHERE a.visit_date >= '2018-09-02'
@@ -54,16 +59,43 @@ class ExtractorController extends Controller
           GROUP BY b.name
           ORDER BY b.name");
 
-      $key_fee = 0;
-      foreach ($results_visit as $key => $value) {
+      $results = $results_visit;
+      $size_fee = sizeof($results_fee) - 1; 
+      $size_drug = sizeof($results_drag) - 1; 
+      $size_material = sizeof($results_material) - 1;
+      $key_fee = 0; 
+      $key_drug = 0; 
+      $key_material = 0;
+      foreach ($results as $key => $value) {
         # code...
-        while ($value->科室 <> $results_fee[$key_fee]->科室) {
+        while ($key_fee < $size_fee && $value->科室 <> $results_fee[$key_fee]->科室) {
           $key_fee++;
         }
+        while ($key_drug < $size_drug && $value->科室 > $results_drag[$key_drug]->科室) {
+          $key_drug++;
+        }
+        while ($key_material < $size_material && $value->科室 > $results_material[$key_material]->科室) {
+          $key_material++;
+        }
         $value->总费用 = $results_fee[$key_fee]->总费用;
+        $value->次均费用 = $results_fee[$key_fee]->总费用 / $value->挂号人次;
+        if ($value->科室 == $results_drag[$key_drug]->科室) {
+          $value->次均药费 = $results_drag[$key_drug]->药费用 / $value->挂号人次;
+          $value->药占比 = $results_drag[$key_drug]->药费用 / $value->总费用;
+        }
+        else {
+          $value->次均药费 = 0;
+          $value->药占比 = 0;
+        }
+        if ($value->科室 == $results_material[$key_material]->科室) {
+          $value->次均材料费 = $results_material[$key_material]->材料费用 / $value->挂号人次;
+          $value->材料占比 = $results_material[$key_material]->材料费用 / $value->总费用;
+        }
+        else {
+          $value->次均材料费 = 0;
+          $value->材料占比 = 0;
+        }
       }
-
-      $results = $results_visit;
       dd($results);
 
       //$log = \DB::getQueryLog()[0]['query'];
