@@ -77,12 +77,12 @@ class ExtractorController extends Controller
         while ($key_material < $size_material && $value->科室 <> $results_material[$key_material]->科室) {
           $key_material++;
         }
-        $value->总费用 = $results_fee[$key_fee]->总费用;
-        $value->次均费用 = $results_fee[$key_fee]->总费用 / $value->挂号人次;
+        $value->总费用 = round($results_fee[$key_fee]->总费用, 2);
+        $value->次均费用 = round($results_fee[$key_fee]->总费用 / $value->挂号人次, 2);
         if ($value->科室 == $results_drug[$key_drug]->科室) {
           // $value->药费用 = $results_drug[$key_drug]->药费用;
-          $value->次均药费 = $results_drug[$key_drug]->药费用 / $value->挂号人次;
-          $value->药占比 = $results_drug[$key_drug]->药费用 / $value->总费用;
+          $value->次均药费 = round($results_drug[$key_drug]->药费用 / $value->挂号人次, 2);
+          $value->药占比 = round($results_drug[$key_drug]->药费用 / $value->总费用, 2);
         }
         else {
           // $value->药费用 = 0;
@@ -91,8 +91,8 @@ class ExtractorController extends Controller
         }
         if ($value->科室 == $results_material[$key_material]->科室) {
           // $value->材料费用 = $results_material[$key_material]->材料费用;
-          $value->次均材料费 = $results_material[$key_material]->材料费用 / $value->挂号人次;
-          $value->材料占比 = $results_material[$key_material]->材料费用 / $value->总费用;
+          $value->次均材料费 = round($results_material[$key_material]->材料费用 / $value->挂号人次, 2);
+          $value->材料占比 = round($results_material[$key_material]->材料费用 / $value->总费用, 2);
         }
         else {
           // $value->材料费用 = 0;
