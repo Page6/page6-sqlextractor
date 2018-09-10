@@ -9,19 +9,19 @@
 
                 <div class="panel-body">
                     <table border=1>
-						<tr>
-							<td>ID号</td>
-							<td>用户</td>
-							<td>查询</td>
-							<td>提取时间</td>
-						</tr>
-						@foreach ($records as $record)
-						<tr>
-							<td>{{ $record->id }}</td>
-							<td>{{ $record->user }}</td>
-							<td>{{ $record->sql }}</td>
-							<td>{{ $record->extracted_at }}</td>
-						</tr>
+						@foreach ($records as $raw => $line)
+							@if ($raw == 0)
+								<tr>
+								@foreach ($line as $key => $value)
+								<td>{{ $key }}</td>
+								@endforeach
+								</tr>
+							@endif
+							<tr>
+							@foreach ($line as $key => $value)
+							<td>{{ $value }}</td>
+							@endforeach
+							</tr>
 						@endforeach
 					</table>
                 </div>
