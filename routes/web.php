@@ -16,7 +16,7 @@ Route::get('/', function () {
     //phpinfo();
 });
 
-Route::get('/extractor', 'ExtractorController@extract');
+Route::post('/extractor', 'ExtractorController@extract');
 
 Route::get('/record', 'RecordController@record');
 
