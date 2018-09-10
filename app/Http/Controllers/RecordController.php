@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class RecordController extends Controller
 {
@@ -16,7 +17,12 @@ class RecordController extends Controller
      */
     public function record() {
     	$records = DB::select('select * from records');
+    	$perPage = 5;
+    	$total = sizeof($records);
+    	$pages = new LengthAwarePaginator($records, $total, $perPage);
+    	$pages->withpath('record');
+    	// dd($pages->currentPage());
 
-    	return view('record', ['records'=>$records]);
+    	return view('record', ['pages'=>$pages]);
     }
 }
