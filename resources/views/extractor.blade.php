@@ -9,19 +9,19 @@
 
                 <div class="panel-body">
                     <table border=1>
-						<tr>
-							<td>ID号</td>
-							<td>姓名</td>
-							<td>年龄</td>
-							<td>职位</td>
-						</tr>
-						@foreach ($employees as $employee)
-						<tr>
-							<td>{{ $employee->id }}</td>
-							<td>{{ $employee->name }}</td>
-							<td>{{ $employee->age }}</td>
-							<td>{{ $employee->position }}</td>
-						</tr>
+						@foreach ($results as $raw => $line)
+							@if ($raw == 0)
+								<tr>
+								@foreach ($line as $key => $value)
+								<td>{{ $key }}</td>
+								@endforeach
+								</tr>
+							@endif
+							<tr>
+							@foreach ($line as $key => $value)
+							<td>{{ $value }}</td>
+							@endforeach
+							</tr>
 						@endforeach
 					</table>
                 </div>
