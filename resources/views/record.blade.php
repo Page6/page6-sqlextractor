@@ -9,7 +9,7 @@
 
                 <div class="panel-body">
                     <table border=1>
-						@foreach ($pages as $raw => $line)
+						@foreach ($records as $raw => $line)
 							@if ($raw == 0)
 								<tr>
 								@foreach ($line as $key => $value)
@@ -24,7 +24,6 @@
 							</tr>
 						@endforeach
 					</table>
-					{{ $pages->links() }}
                 </div>
             </div>
         </div>

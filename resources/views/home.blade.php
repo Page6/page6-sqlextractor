@@ -26,8 +26,10 @@
                     You are logged in!
                 </div>
                 <div class="links panel-body">
+                @if (Auth::user()->name == 'guest')
                 <form action="{{ url('/extractor') }}" method="POST">
-                    {!! csrf_field() !!}
+                    {{ csrf_field() }}
+                    <h3>Extract</h3>
                     <label>开始日期：</label><input name="start_extract" type="date" value="2018-09-01"/>
                     <label>结束日期：</label><input name="end_extract" type="date" value="2018-09-01"/>
                     <input type="submit">
@@ -35,6 +37,18 @@
                     <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->
                     <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
                 </form>
+                @elseif (Auth::user()->name == 'admin')
+                <form action="{{ url('/record') }}" method="POST">
+                    {{ csrf_field() }}
+                    <h3>Record</h3>
+                    <label>开始日期：</label><input name="start_record" type="date" value="2018-09-01"/>
+                    <label>结束日期：</label><input name="end_record" type="date" value="2018-09-01"/>
+                    <input type="submit">
+                    <!-- <a href="{{ url('/extractor') }}"><h1>Extractor</h1></a> -->
+                    <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->
+                    <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
+                </form>
+                @endif
                 </div>
             </div>
         </div>

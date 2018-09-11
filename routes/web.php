@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::post('/extractor', 'ExtractorController@extract');
 
-Route::get('/record', 'RecordController@record');
+Route::post('/record', 'RecordController@record');
 
 Auth::routes();
 
