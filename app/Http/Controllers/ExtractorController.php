@@ -8,14 +8,27 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ExtractorController extends Controller
+use App\Exports\ExtractExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+
+class ExtractorController extends Controller implements FromView
 {
     //
-    
+    public $results;
     /**
      * extract data from database.
      */
-    public function extract(Requests\ExtractRequest $request) {
+    public function view(): View
+    {
+        // $results = "xxx";
+        return view('extract', [
+            'results' => $this->results
+        ]);
+    }
+
+    public function extract(Requests\ExtractorRequest $request) {
       	// \DB::connection('mysql_page6')->enableQueryLog();
       	// $employees = \DB::select('select * from employees');
         //$employees = \DB::connection('mysql_page6')->table('employees')->get();
@@ -71,7 +84,7 @@ class ExtractorController extends Controller
             ORDER BY b.name", 
             [$request['start_extract'], $request['end_extract']]);
 
-        $results = $results_visit;
+        $this->results = $results_visit;
         $size_fee = sizeof($results_fee)-1; 
         $size_drug = sizeof($results_drug)-1; 
         $size_material = sizeof($results_material)-1;
@@ -79,7 +92,7 @@ class ExtractorController extends Controller
         $key_drug = 0; 
         $key_material = 0;
 
-        foreach ($results as $key => $value) {
+        foreach ($this->results as $key => $value) {
             # code...
             $gbk_value = iconv('UTF-8', 'GBK', $value->科室);
             while ($key_fee < $size_fee 
@@ -125,6 +138,10 @@ class ExtractorController extends Controller
                       'extracted_at'=>date('Y-m-d H:i:s',time()));
         $records = DB::table('records')->insert($record);
 
-      	return view('extractor', ['results'=>$results]);
+      	// return view('extractor', ['results'=>$results]);
+        view('extract', [
+            'results' => $this->results
+        ]); 
+        return Excel::download($this, 'users.xlsx');
     }
 }
