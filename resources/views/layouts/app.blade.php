@@ -31,6 +31,9 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
+                    @auth
+                    <a class="navbar-brand" href="{{ url('/home') }}">Home</a>
+                    @endauth
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
