@@ -28,14 +28,6 @@ class ExtractorController extends Controller implements FromView
         ]);
     }
 
-    public function export() {
-        dd($this->results);
-        view('extract', [
-            'results' => $this->results
-        ]); 
-        return Excel::download($this, 'export.xlsx');
-    }
-
     public function extract(Requests\ExtractorRequest $request) {
       	// \DB::connection('mysql_page6')->enableQueryLog();
       	// $employees = \DB::select('select * from employees');
@@ -142,10 +134,20 @@ class ExtractorController extends Controller implements FromView
 
         //$log = \DB::getQueryLog()[0]['query'];
         $record=array('user'=>Auth::user()->name,
-                      'sql'=>'extract-select',
-                      'extracted_at'=>date('Y-m-d H:i:s',time()));
+                  'type'=>$request->input('submit_type'),
+                  'extracted_at'=>date('Y-m-d H:i:s',time()),
+                  'start_at'=>$request->input('start_extract'),
+                  'end_at'=>$request->input('end_extract'));
         $records = DB::table('records')->insert($record);
-
-      	return view('extractor', ['results'=>$this->results]);
+        
+        if($request->input('submit_type') == '导出') {
+            view('extract', [
+                'results' => $this->results
+            ]); 
+            return Excel::download($this, 'export.xlsx');
+        }
+        else {
+          return view('extractor', ['results'=>$this->results]);
+        }
     }
 }
