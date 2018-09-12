@@ -1,14 +1,17 @@
 <table>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Email</th>
+    @foreach ($results[0] as $key => $value)
+        <td>{{ $key }}</td>
+    @endforeach
     </tr>
     </thead>
     <tbody>
-    @foreach($results as $result)
+    @foreach ($results as $raw => $line)
         <tr>
-            <td>a</td>
+        @foreach ($line as $key => $value)
+            <td>{{ $value }}</td>
+        @endforeach
         </tr>
     @endforeach
     </tbody>
