@@ -27,6 +27,7 @@ class ExtractorRequest extends FormRequest
             //
             'start_extract'=>'required',
             'end_extract'=>'required',
+            'submit_type'=>'required',
         ];
     }
 }
