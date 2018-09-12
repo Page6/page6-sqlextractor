@@ -33,6 +33,38 @@ class ExtractorController extends Controller implements FromView
       	// $employees = \DB::select('select * from employees');
         //$employees = \DB::connection('mysql_page6')->table('employees')->get();
         
+        switch (Auth::user()->name) {
+
+          case 'Guest_Ybb_005':
+            $this->YbbFeeStatics($request);
+            break;
+
+          default:
+            return view('home');
+        }
+
+        // dd($results);
+
+        //$log = \DB::getQueryLog()[0]['query'];
+        $record=array('user'=>Auth::user()->name,
+                  'type'=>$request->input('submit_type'),
+                  'extracted_at'=>date('Y-m-d H:i:s',time()),
+                  'start_at'=>$request->input('start_extract'),
+                  'end_at'=>$request->input('end_extract'));
+        $records = DB::table('records')->insert($record);
+        
+        if($request->input('submit_type') == '导出') {
+            view('extract', [
+                'results' => $this->results
+            ]); 
+            return Excel::download($this, 'export.xlsx');
+        }
+        else {
+          return view('extractor', ['results'=>$this->results]);
+        }
+    }
+
+    public function YbbStatics(Requests\ExtractorRequest $request) {
         /**
         * 按科室（按临床考核细分）统计：
         * 挂号人次 | 总费用 | 次均费用 | 次均药费 | 次均材料费 | 药占比 | 材料占比
@@ -129,25 +161,6 @@ class ExtractorController extends Controller implements FromView
                 $value->次均材料费 = 0;
                 $value->材料占比 = 0;
             }
-        }
-        // dd($results);
-
-        //$log = \DB::getQueryLog()[0]['query'];
-        $record=array('user'=>Auth::user()->name,
-                  'type'=>$request->input('submit_type'),
-                  'extracted_at'=>date('Y-m-d H:i:s',time()),
-                  'start_at'=>$request->input('start_extract'),
-                  'end_at'=>$request->input('end_extract'));
-        $records = DB::table('records')->insert($record);
-        
-        if($request->input('submit_type') == '导出') {
-            view('extract', [
-                'results' => $this->results
-            ]); 
-            return Excel::download($this, 'export.xlsx');
-        }
-        else {
-          return view('extractor', ['results'=>$this->results]);
         }
     }
 }
