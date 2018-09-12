@@ -28,6 +28,14 @@ class ExtractorController extends Controller implements FromView
         ]);
     }
 
+    public function export() {
+        dd($this->results);
+        view('extract', [
+            'results' => $this->results
+        ]); 
+        return Excel::download($this, 'export.xlsx');
+    }
+
     public function extract(Requests\ExtractorRequest $request) {
       	// \DB::connection('mysql_page6')->enableQueryLog();
       	// $employees = \DB::select('select * from employees');
@@ -47,7 +55,7 @@ class ExtractorController extends Controller implements FromView
               AND a.visit_dept = b.code
             GROUP BY b.name
             ORDER BY b.name", 
-            [$request['start_extract'], $request['end_extract']]);
+            [$request->input('start_extract'), $request->input('end_extract')]);
 
         $results_fee = DB::connection('mysql_page6')->select("
             SELECT b.name 科室, SUM(a.charge_price) 总费用
@@ -58,7 +66,7 @@ class ExtractorController extends Controller implements FromView
               AND a.apply_unit = b.code
             GROUP BY b.name
             ORDER BY b.name", 
-            [$request['start_extract'], $request['end_extract']]);
+            [$request->input('start_extract'), $request->input('end_extract')]);
 
         $results_drug = DB::connection('mysql_page6')->select("
             SELECT b.name 科室, SUM(a.charge_price) 药费用
@@ -70,7 +78,7 @@ class ExtractorController extends Controller implements FromView
               AND a.bill_code in('001','005','006')
             GROUP BY b.name
             ORDER BY b.name", 
-            [$request['start_extract'], $request['end_extract']]);
+            [$request->input('start_extract'), $request->input('end_extract')]);
 
         $results_material = DB::connection('mysql_page6')->select("
             SELECT b.name 科室, SUM(a.charge_price) 材料费用
@@ -82,7 +90,7 @@ class ExtractorController extends Controller implements FromView
               AND a.bill_code = '016'
             GROUP BY b.name
             ORDER BY b.name", 
-            [$request['start_extract'], $request['end_extract']]);
+            [$request->input('start_extract'), $request->input('end_extract')]);
 
         $this->results = $results_visit;
         $size_fee = sizeof($results_fee)-1; 
@@ -138,10 +146,6 @@ class ExtractorController extends Controller implements FromView
                       'extracted_at'=>date('Y-m-d H:i:s',time()));
         $records = DB::table('records')->insert($record);
 
-      	// return view('extractor', ['results'=>$results]);
-        view('extract', [
-            'results' => $this->results
-        ]); 
-        return Excel::download($this, 'users.xlsx');
+      	return view('extractor', ['results'=>$this->results]);
     }
 }

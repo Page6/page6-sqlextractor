@@ -32,7 +32,7 @@
                     <h3>Extract</h3>
                     <label>开始日期：</label><input name="start_extract" type="date" value="2018-09-01"/>
                     <label>结束日期：</label><input name="end_extract" type="date" value="2018-09-01"/>
-                    <input type="submit">
+                    <input type="submit" value="查询">
                     <!-- <a href="{{ url('/extractor') }}"><h1>Extractor</h1></a> -->
                     <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->
                     <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
@@ -43,7 +43,7 @@
                     <h3>Record</h3>
                     <label>开始日期：</label><input name="start_record" type="date" value="2018-09-01"/>
                     <label>结束日期：</label><input name="end_record" type="date" value="2018-09-01"/>
-                    <input type="submit">
+                    <input type="submit" value="查询">
                     <!-- <a href="{{ url('/extractor') }}"><h1>Extractor</h1></a> -->
                     <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->
                     <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
