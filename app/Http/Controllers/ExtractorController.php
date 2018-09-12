@@ -35,8 +35,8 @@ class ExtractorController extends Controller implements FromView
         
         switch (Auth::user()->name) {
 
-          case 'Guest_Ybb_005':
-            $this->YbbFeeStatics($request);
+          case 'Guest_ybb_11015':
+            $this->YbbStatics($request);
             break;
 
           default:

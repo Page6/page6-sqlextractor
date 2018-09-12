@@ -38,7 +38,7 @@
                     <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->
                     <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
                 </form>
-                @elseif (Auth::user()->name == 'admin')
+                @elseif (Auth::user()->name == config('app.admin', 'Admin'))
                 <form action="{{ url('/record') }}" method="POST">
                     {{ csrf_field() }}
                     <h3>Record</h3>

@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Admin
+    |--------------------------------------------------------------------------
+    |
+    | This value is the administrator of your application. This value is used when the
+    | framework needs to place the application's administrator in a notification or
+    | any other location as required by the application or its packages.
+    |
+    */
+
+    'admin' => env('APP_ADMIN', 'Admin'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
