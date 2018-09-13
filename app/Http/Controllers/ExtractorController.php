@@ -54,13 +54,21 @@ class ExtractorController extends Controller implements FromView
         $records = DB::table('records')->insert($record);
         
         if($request->input('submit_type') == '导出') {
+            if ($this->results == null) {
+                $message = 'Sorry, the result is NULL.';
+                return view('message', ['message'=>$message]);
+            }
             view('extract', [
                 'results' => $this->results
             ]); 
             return Excel::download($this, 'export.xlsx');
         }
         else {
-          return view('extractor', ['results'=>$this->results]);
+            if ($this->results == null) {
+                $message = 'Sorry, the result is NULL.';
+                return view('message', ['message'=>$message]);
+            }
+            return view('extractor', ['results'=>$this->results]);
         }
     }
 
