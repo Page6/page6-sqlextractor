@@ -19,7 +19,7 @@ class RecordController extends Controller
     public function record(Requests\RecordRequest $request) {
     	// $records = DB::select('select * from records');
         $records = DB::connection('mysql_page6')->select("
-            SELECT a.user 用户, a.sql 查询类型, a.extracted_at 查询时间
+            SELECT a.user 用户, a.type 查询类型, a.extracted_at 查询时间, a.start_at 开始日期, a.end_at 结束日期
             FROM records a
             WHERE extracted_at >= ?
             AND extracted_at < ?", 
@@ -31,6 +31,10 @@ class RecordController extends Controller
     	// dd($pages->currentPage());
 
     	// return view('record', ['pages'=>$pages]);
+        if ($records == null) {
+            $message = 'Sorry, the record is NULL.';
+            return view('message', ['message'=>$message]);
+        }
         return view('record', ['records'=>$records]);
     }
 }
