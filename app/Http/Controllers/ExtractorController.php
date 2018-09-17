@@ -16,7 +16,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 class ExtractorController extends Controller implements FromView
 {
     //
-    public $results;
+    public $results, $paraments;
     /**
      * extract data from database.
      */
@@ -46,11 +46,10 @@ class ExtractorController extends Controller implements FromView
         // dd($results);
 
         //$log = \DB::getQueryLog()[0]['query'];
-        $record=array('user'=>Auth::user()->name,
-                  'type'=>$request->input('submit_type'),
-                  'extracted_at'=>date('Y-m-d H:i:s',time()),
-                  'start_at'=>$request->input('start_extract'),
-                  'end_at'=>$request->input('end_extract'));
+        $record=array('name'=>Auth::user()->name,
+                  'extract_type'=>$request->input('submit_type'),
+                  'extract_at'=>date('Y-m-d H:i:s',time()),
+                  'paraments'=>$this->paraments);
         $records = DB::table('records')->insert($record);
         
         if($request->input('submit_type') == '导出') {
@@ -125,6 +124,7 @@ class ExtractorController extends Controller implements FromView
             [$request->input('start_extract'), $request->input('end_extract')]);
 
         $this->results = $results_visit;
+        $this->paraments = $request->input('start_extract').';'.$request->input('end_extract').';';
         $size_fee = sizeof($results_fee)-1; 
         $size_drug = sizeof($results_drug)-1; 
         $size_material = sizeof($results_material)-1;

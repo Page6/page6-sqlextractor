@@ -19,10 +19,10 @@ class RecordController extends Controller
     public function record(Requests\RecordRequest $request) {
     	// $records = DB::select('select * from records');
         $records = DB::connection('mysql_page6')->select("
-            SELECT a.user 用户, a.type 查询类型, a.extracted_at 查询时间, a.start_at 开始日期, a.end_at 结束日期
+            SELECT a.name 用户, a.extract_type 查询类型, a.extract_at 查询时间, a.paraments 查询参数
             FROM records a
-            WHERE extracted_at >= ?
-            AND extracted_at < ?", 
+            WHERE extract_at >= ?
+            AND extract_at < ?", 
             [$request['start_record'], $request['end_record']]);
     	// $perPage = 5;
     	// $total = sizeof($records);
