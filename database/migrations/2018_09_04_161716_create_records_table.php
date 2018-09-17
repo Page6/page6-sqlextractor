@@ -15,11 +15,10 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user');
-            $table->string('type');
-            $table->timestamp('extracted_at');
-            $table->string('start_at');
-            $table->string('end_at');
+            $table->string('name');
+            $table->string('extract_type');
+            $table->timestamp('extract_at');
+            $table->string('paraments');
         });
     }
 
