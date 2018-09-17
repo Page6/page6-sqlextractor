@@ -28,11 +28,12 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <!-- <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a> -->
                     @auth
                     <a class="navbar-brand" href="{{ url('/home') }}">Home</a>
+                    @else
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
                     @endauth
                 </div>
 
