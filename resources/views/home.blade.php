@@ -26,7 +26,7 @@
                     You are logged in!
                 </div>
                 <div class="links panel-body">
-                @if (@preg_match('/[^Guest_]*?[_]([0-9]{5}$)/', Auth::user()->name))
+                @if (@preg_match('/[^Guest_]*?[_]([0-9]?$)/', Auth::user()->name))
                 <form action="{{ url('/extractor') }}" method="POST">
                     {{ csrf_field() }}
                     <h3>Extract</h3>
