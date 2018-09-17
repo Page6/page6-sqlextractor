@@ -25,9 +25,6 @@ class ExtractorRequest extends FormRequest
     {
         return [
             //
-            'start_extract'=>'required',
-            'end_extract'=>'required',
-            'submit_type'=>'required',
         ];
     }
 }
