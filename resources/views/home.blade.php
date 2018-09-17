@@ -27,17 +27,18 @@
                 </div>
                 <div class="links panel-body">
                 @if (@preg_match('/[^Guest_]*?[_]([0-9]?$)/', Auth::user()->name))
-                <form action="{{ url('/extractor') }}" method="POST">
-                    {{ csrf_field() }}
-                    <h3>Extract</h3>
-                    <label>开始日期：</label><input name="start_extract" type="date" value="2018-09-01"/>
-                    <label>结束日期：</label><input name="end_extract" type="date" value="2018-09-01"/>
-                    <input name="submit_type" type="submit" value="查询"/>
-                    <input name="submit_type" type="submit" value="导出"/>
-                    <!-- <a href="{{ url('/extractor') }}"><h1>Extractor</h1></a> -->
-                    <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->
-                    <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
-                </form>
+                    <table border=1>
+                        <tr>
+                            <td>报表号</td>
+                            <td>报表内容</td>
+                        </tr>
+                        @foreach ($reports as $report)
+                            <tr>
+                                <td>{{$report->id}}</td>
+                                <td><a href="">{{$report->comment}}</a></td>
+                            </tr>
+                        @endforeach
+                    </table>
                 @elseif (Auth::user()->name == config('app.admin', 'Admin'))
                 <form action="{{ url('/record') }}" method="POST">
                     {{ csrf_field() }}
