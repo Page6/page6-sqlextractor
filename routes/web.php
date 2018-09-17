@@ -17,9 +17,7 @@ Route::get('/', function () {
 });
 
 Route::post('/extractor', 'ExtractorController@extract');
-Route::get( '/extractor/{id}' , function ( $id ) {
-        return view( 'selector' , [ 'id' => $id ] );
-});
+Route::get( '/extractor/{id}', 'SelectorController@select');
 
 Route::post('/record', 'RecordController@record');
 
