@@ -27,18 +27,12 @@
                 </div>
                 <div class="links panel-body">
                 @if (@preg_match('/[^Guest_]*?[_]([0-9]?$)/', Auth::user()->name))
-                    <table border=1>
-                        <tr>
-                            <td>报表号</td>
-                            <td>报表内容</td>
-                        </tr>
+                    <div class="panel-body">
                         @foreach ($reports as $report)
-                            <tr>
-                                <td>{{$report->id}}</td>
-                                <td><a href="">{{$report->comment}}</a></td>
-                            </tr>
+                                <a href="/extractor/{{$report->id}}">{{$report->comment}}</a>
+                                <br/>
                         @endforeach
-                    </table>
+                    </div>
                 @elseif (Auth::user()->name == config('app.admin', 'Admin'))
                 <form action="{{ url('/record') }}" method="POST">
                     {{ csrf_field() }}
