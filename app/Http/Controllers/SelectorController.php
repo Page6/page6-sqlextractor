@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class Selector extends Controller
+class SelectorController extends Controller
 {
     //
     public function select(int $id) {
@@ -22,6 +22,6 @@ class Selector extends Controller
             return view('message', ['message'=>$message]);
     	}
     	
-    	return view('Selector', ['report'=>$reports[0]]);
+    	return view('selector', ['report'=>$reports[0]]);
     }
 }

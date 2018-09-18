@@ -29,7 +29,7 @@
                 @if (@preg_match('/[^Guest_]*?[_]([0-9]?$)/', Auth::user()->name))
                     <div class="panel-body">
                         @foreach ($reports as $report)
-                                <a href="/extractor/{{$report->id}}">{{$report->comment}}</a>
+                                <a href="/selector/{{$report->id}}">{{$report->comment}}</a>
                                 <br/>
                         @endforeach
                     </div>
