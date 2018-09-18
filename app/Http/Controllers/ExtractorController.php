@@ -33,17 +33,13 @@ class ExtractorController extends Controller implements FromView
       	// $employees = \DB::select('select * from employees');
         //$employees = \DB::connection('mysql_page6')->table('employees')->get();
         
-        switch (Auth::user()->name) {
+        $reports = DB::select("
+            SELECT *
+            FROM reports
+            WHERE id = ?",
+            [$request->input('report_id')]);
 
-          case 'Guest_ybb_11015':
-            $this->YbbStatics($request);
-            break;
-
-          default:
-            return view('home');
-        }
-
-        // dd($results);
+        call_user_func(array($this, $reports[0]->report), $request);
 
         //$log = \DB::getQueryLog()[0]['query'];
         $record=array('name'=>Auth::user()->name,
@@ -71,7 +67,7 @@ class ExtractorController extends Controller implements FromView
         }
     }
 
-    public function YbbStatics(Requests\ExtractorRequest $request) {
+    public function report1(Requests\ExtractorRequest $request) {
         /**
         * 按科室（按临床考核细分）统计：
         * 挂号人次 | 总费用 | 次均费用 | 次均药费 | 次均材料费 | 药占比 | 材料占比
