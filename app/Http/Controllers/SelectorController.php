@@ -20,7 +20,7 @@ class SelectorController extends Controller
 
     	if ($reports[0]->user_name <> Auth::user()->name) {
     		$message = 'Sorry, you have no right to select.';
-            return view('message', ['message'=>$message]);
+            return view('message', ['type'=>'danger','message'=>$message]);
     	}
     	
     	return view('selector', ['report'=>$reports[0]]);

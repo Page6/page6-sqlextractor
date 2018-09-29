@@ -11,6 +11,8 @@ interface CanResetPassword
      */
     public function getEmailForPasswordReset();
 
+    public function getNameForPasswordReset();
+
     /**
      * Send the password reset notification.
      *

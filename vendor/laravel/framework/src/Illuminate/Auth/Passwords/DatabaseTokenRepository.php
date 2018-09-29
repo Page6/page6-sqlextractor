@@ -73,7 +73,8 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      */
     public function create(CanResetPasswordContract $user)
     {
-        $email = $user->getEmailForPasswordReset();
+        // $email = $user->getEmailForPasswordReset();
+        $name = $user->getNameForPasswordReset();
 
         $this->deleteExisting($user);
 
@@ -82,7 +83,8 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
         // the database so that we can verify the token within the actual reset.
         $token = $this->createNewToken();
 
-        $this->getTable()->insert($this->getPayload($email, $token));
+        // $this->getTable()->insert($this->getPayload($email, $token));
+        $this->getTable()->insert($this->getPayload($name, $token));
 
         return $token;
     }
@@ -95,7 +97,8 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      */
     protected function deleteExisting(CanResetPasswordContract $user)
     {
-        return $this->getTable()->where('email', $user->getEmailForPasswordReset())->delete();
+        // return $this->getTable()->where('email', $user->getEmailForPasswordReset())->delete();
+        return $this->getTable()->where('name', $user->getNameForPasswordReset())->delete();
     }
 
     /**
@@ -105,9 +108,10 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
      * @param  string  $token
      * @return array
      */
-    protected function getPayload($email, $token)
+    protected function getPayload($name, $token)
     {
-        return ['email' => $email, 'token' => $this->hasher->make($token), 'created_at' => new Carbon];
+        // return ['email' => $email, 'token' => $this->hasher->make($token), 'created_at' => new Carbon];
+        return ['name' => $name, 'token' => $this->hasher->make($token), 'created_at' => new Carbon];
     }
 
     /**
@@ -120,7 +124,8 @@ class DatabaseTokenRepository implements TokenRepositoryInterface
     public function exists(CanResetPasswordContract $user, $token)
     {
         $record = (array) $this->getTable()->where(
-            'email', $user->getEmailForPasswordReset()
+            // 'email', $user->getEmailForPasswordReset()
+            'name', $user->getNameForPasswordReset()
         )->first();
 
         return $record &&

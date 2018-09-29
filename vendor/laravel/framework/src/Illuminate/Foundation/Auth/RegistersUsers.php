@@ -4,6 +4,7 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Registered;
 
 trait RegistersUsers
@@ -30,12 +31,18 @@ trait RegistersUsers
     {
         $this->validator($request->all())->validate();
 
+        if ($this->registered($request)) {
+            $message = 'user '.$request->input('name').' has been register!';
+            return view('message', ['type'=>'warning', 'message'=>$message]);
+        }
+
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
 
         return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+                        ? view('message', ['type'=>'success', 'message'=>'user '.$request->input('name').' register success!'])
+                        : redirect($this->redirectPath());
     }
 
     /**
@@ -55,8 +62,17 @@ trait RegistersUsers
      * @param  mixed  $user
      * @return mixed
      */
-    protected function registered(Request $request, $user)
+    protected function registered(Request $request)
     {
-        //
+        $users = DB::select("
+            SELECT *
+            FROM users
+            WHERE name = ?",
+            [$request->input('name')]);
+        if (sizeof($users)) {
+            return true;
+        }
+
+        return false;
     }
 }

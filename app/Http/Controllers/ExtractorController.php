@@ -57,7 +57,7 @@ class ExtractorController extends Controller implements FromView
         if($request->input('submit_type') == 'export') {
             if ($this->results == null) {
                 $message = 'Sorry, the result is NULL.';
-                return view('message', ['message'=>$message]);
+                return view('message', ['type'=>'warning','message'=>$message]);
             }
             view('extract', [
                 'results' => $this->results
@@ -67,7 +67,7 @@ class ExtractorController extends Controller implements FromView
         else {
             if ($this->results == null) {
                 $message = 'Sorry, the result is NULL.';
-                return view('message', ['message'=>$message]);
+                return view('message', ['type'=>'warning','message'=>$message]);
             }
             return view('extractor', ['results'=>$this->results]);
         }

@@ -25,7 +25,8 @@ trait ResetsPasswords
     public function showResetForm(Request $request, $token = null)
     {
         return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
+            // ['token' => $token, 'email' => $request->email]
+            ['token' => $token]
         );
     }
 
@@ -37,7 +38,7 @@ trait ResetsPasswords
      */
     public function reset(Request $request)
     {
-        $this->validate($request, $this->rules(), $this->validationErrorMessages());
+        // $this->validate($request, $this->rules(), $this->validationErrorMessages());
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
@@ -65,7 +66,7 @@ trait ResetsPasswords
     {
         return [
             'token' => 'required',
-            'email' => 'required|email',
+            // 'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
         ];
     }
@@ -89,7 +90,8 @@ trait ResetsPasswords
     protected function credentials(Request $request)
     {
         return $request->only(
-            'email', 'password', 'password_confirmation', 'token'
+            // 'email', 'password', 'password_confirmation', 'token'
+            'name', 'password', 'password_confirmation', 'token'
         );
     }
 
@@ -110,7 +112,8 @@ trait ResetsPasswords
 
         event(new PasswordReset($user));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
+        $this->guard()->logout();
     }
 
     /**
@@ -121,8 +124,10 @@ trait ResetsPasswords
      */
     protected function sendResetResponse($response)
     {
-        return redirect($this->redirectPath())
-                            ->with('status', trans($response));
+        // return redirect($this->redirectPath())
+        //                     ->with('status', trans($response));
+        $message = 'you have reset password success, please login again.';
+        return view('message', ['type'=>'success', 'message'=>$message]);
     }
 
     /**
@@ -134,9 +139,11 @@ trait ResetsPasswords
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
-        return redirect()->back()
-                    ->withInput($request->only('email'))
-                    ->withErrors(['email' => trans($response)]);
+        // return redirect()->back()
+        //             ->withInput($request->only('email'))
+        //             ->withErrors(['email' => trans($response)]);
+        $message = 'password is reset failed, please try again.';
+        return view('message', ['type'=>'danger', 'message'=>$message]);
     }
 
     /**

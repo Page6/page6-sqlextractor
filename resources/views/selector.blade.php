@@ -24,7 +24,7 @@
         </div>
         @endif
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">Dashboard</div>
                 <div class="links panel-body">
                     <div class="panel-body">
@@ -39,9 +39,9 @@
                                         <label for="input_text" class="sr-only">input</label>
                                         <input id="input_text" type="text" class="form-control" name="input_text" placeholder="{{$report->report_name}}" required autofocus/>
                                     </div>
-                                    <input name="submit_type" type="submit" value="search" 
+                                    <input name="submit_type" type="submit" class="btn btn-primary" value="search" 
                                         onclick="showLoading(true)"/>
-                                    <input name="submit_type" type="submit" value="export" 
+                                    <input name="submit_type" type="submit" class="btn btn-primary" value="export" 
                                         onclick="showLoading(true)"/>
                                     <div id="loading" class="loading" style="display:none;">
                                         extracting now, please wait...
@@ -61,9 +61,9 @@
                                             <option>female</option>
                                         </select>
                                     </div>
-                                    <input name="submit_type" type="submit" value="search" 
+                                    <input name="submit_type" type="submit" class="btn btn-primary" value="search" 
                                         onclick="showLoading(true)"/>
-                                    <input name="submit_type" type="submit" value="export" 
+                                    <input name="submit_type" type="submit" class="btn btn-primary" value="export" 
                                         onclick="showLoading(true)"/>
                                     <div id="loading" class="loading" style="display:none;">
                                         extracting now, please wait...
@@ -77,9 +77,9 @@
                                     <input type="hidden" name="report_id" value="{{$report->report_id}}">
                                     <label>start at</label><input name="start_date" type="date" value="2018-09-01"/>
                                     <label>end at</label><input name="end_date" type="date" value="2018-09-01"/>
-                                    <input name="submit_type" type="submit" value="查询" 
+                                    <input name="submit_type" type="submit" class="btn btn-primary" value="search" 
                                         onclick="showLoading(true)"/>
-                                    <input name="submit_type" type="submit" value="导出" 
+                                    <input name="submit_type" type="submit" class="btn btn-primary" value="export" 
                                         onclick="showLoading(true)"/>
                                     <div id="loading" class="loading" style="display:none;">
                                         extracting now, please wait...

@@ -18,9 +18,9 @@ class RecordController extends Controller
      */
     public function record(Requests\RecordRequest $request) {
     	// $records = DB::select('select * from records');
-        $records = DB::connection('mysql_page6')->select("
-            SELECT a.name 用户, a.extract_type 查询类型, a.extract_at 查询时间, a.paraments 查询参数
-            FROM records a
+        $records = DB::select("
+            SELECT name, report_id, extract_type, extract_at, paraments
+            FROM records
             WHERE extract_at >= ?
             AND extract_at < ?", 
             [$request['start_record'], $request['end_record']]);
@@ -33,7 +33,7 @@ class RecordController extends Controller
     	// return view('record', ['pages'=>$pages]);
         if ($records == null) {
             $message = 'Sorry, the record is NULL.';
-            return view('message', ['message'=>$message]);
+            return view('message', ['type'=>'warning','message'=>$message]);
         }
         return view('record', ['records'=>$records]);
     }

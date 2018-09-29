@@ -13,38 +13,44 @@
         </div>
         @endif
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-                <div class="links panel-body">
-                @if (@preg_match('/[^guest_]*?[_]([0-9]?$)/', Auth::user()->name))
-                    <div class="panel-body">
-                        @foreach ($reports as $report)
-                                <a href="/selector/{{$report->report_id}}">{{$report->report_name}}</a>
-                                <br/>
-                        @endforeach
-                    </div>
+            <div class="panel panel-primary">
+                @if (@preg_match('/[^Guest_]*?[_]([0-9]?$)/', Auth::user()->name))
+                    <div class="panel-heading">report list</div>
+                    <div class="list-group">
+                         @foreach ($reports as $report)
+                                <a href="/selector/{{$report->report_id}}" class="list-group-item">{{$report->report_name}}</a>
+                         @endforeach
+                     </div>
                 @elseif (Auth::user()->name == config('app.admin', 'admin'))
-                <form action="{{ url('/record') }}" method="POST">
-                    {{ csrf_field() }}
-                    <h3>Record</h3>
-                    <label>开始日期：</label><input name="start_record" type="date" value="2018-09-01"/>
-                    <label>结束日期：</label><input name="end_record" type="date" value="2018-09-01"/>
-                    <input type="submit" value="查询"/>
-             
-                    <!-- <a href="{{ url('/extractor') }}"><h1>Extractor</h1></a> -->
-                    <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->
-                    <!--<a href="https://github.com/laravel/laravel">GitHub</a>-->
-                </form>
+                    <div class="panel-heading">User records</div>
+                    <div class="panel-body">
+                        <form action="{{ url('/record') }}" method="POST">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="start_record" class="col-md-4 control-label">start at</label>
+
+                                <div class="col-md-6">
+                                    <input id="start_record" type="text" class="form-control" name="start_record" value="2018-08-01" required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="end_record" class="col-md-4 control-label">end at</label>
+
+                                <div class="col-md-6">
+                                    <input id="end_record" type="text" class="form-control" name="end_record" value="2018-09-01" required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        extract
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 @endif
                 </div>
             </div>

@@ -119,9 +119,9 @@ class PasswordBroker implements PasswordBrokerContract
             return static::INVALID_PASSWORD;
         }
 
-        if (! $this->tokens->exists($user, $credentials['token'])) {
-            return static::INVALID_TOKEN;
-        }
+        // if (! $this->tokens->exists($user, $credentials['token'])) {
+        //     return static::INVALID_TOKEN;
+        // }
 
         return $user;
     }

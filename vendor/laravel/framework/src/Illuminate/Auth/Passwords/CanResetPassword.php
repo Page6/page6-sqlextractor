@@ -16,6 +16,11 @@ trait CanResetPassword
         return $this->email;
     }
 
+    public function getNameForPasswordReset()
+    {
+        return $this->name;
+    }
+
     /**
      * Send the password reset notification.
      *
