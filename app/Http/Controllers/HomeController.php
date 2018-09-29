@@ -27,9 +27,10 @@ class HomeController extends Controller
     {
         $name = Auth::user()->name;
         $reports = DB::select("
-            SELECT *
-            FROM reports
-            WHERE name = ?",
+            SELECT a.id report_id, a.report_name report_name
+            FROM reports a, report_auth b
+            WHERE a.id = b.report_id
+            AND b.user_name = ?",
             [$name]);
         return view('home', ['reports'=>$reports]);
     }

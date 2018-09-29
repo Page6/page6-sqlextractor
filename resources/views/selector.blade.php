@@ -28,21 +28,61 @@
                 <div class="panel-heading">Dashboard</div>
                 <div class="links panel-body">
                     <div class="panel-body">
-                        @switch ($report->id)
+                        @switch ($report->report_type)
                             @case(1)
+                                <form action="{{ url('/extractor') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="report_id" value="{{$report->report_id}}">
+                                    <h3>Extract</h3>
+                                    <div class="form-group">
+                                        <label>{{$report->report_name}}</label>
+                                        <label for="input_text" class="sr-only">input</label>
+                                        <input id="input_text" type="text" class="form-control" name="input_text" placeholder="{{$report->report_name}}" required autofocus/>
+                                    </div>
+                                    <input name="submit_type" type="submit" value="search" 
+                                        onclick="showLoading(true)"/>
+                                    <input name="submit_type" type="submit" value="export" 
+                                        onclick="showLoading(true)"/>
+                                    <div id="loading" class="loading" style="display:none;">
+                                        extracting now, please wait...
+                                    </div>
+                                </form>
+                                @break
                             @case(2)
                                 <form action="{{ url('/extractor') }}" method="POST">
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="report_id" value="{{$report->report_id}}">
                                     <h3>Extract</h3>
-                                    <input type="hidden" name="report_id" value="{{$report->id}}">
-                                    <label>开始日期：</label><input name="start_extract" type="date" value="2018-09-01"/>
-                                    <label>结束日期：</label><input name="end_extract" type="date" value="2018-09-01"/>
+                                    <div class="form-group">
+                                        <label>sex is</label>
+                                        <label for="sex" class="sr-only">sex</label>
+                                        <select id="sex" type="select" class="form-control" name="sex" value="male" required autofocus>
+                                            <option>male</option>
+                                            <option>female</option>
+                                        </select>
+                                    </div>
+                                    <input name="submit_type" type="submit" value="search" 
+                                        onclick="showLoading(true)"/>
+                                    <input name="submit_type" type="submit" value="export" 
+                                        onclick="showLoading(true)"/>
+                                    <div id="loading" class="loading" style="display:none;">
+                                        extracting now, please wait...
+                                    </div>
+                                </form>
+                                @break
+                            @case(3)
+                                <form action="{{ url('/extractor') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <h3>Extract</h3>
+                                    <input type="hidden" name="report_id" value="{{$report->report_id}}">
+                                    <label>start at</label><input name="start_date" type="date" value="2018-09-01"/>
+                                    <label>end at</label><input name="end_date" type="date" value="2018-09-01"/>
                                     <input name="submit_type" type="submit" value="查询" 
                                         onclick="showLoading(true)"/>
                                     <input name="submit_type" type="submit" value="导出" 
                                         onclick="showLoading(true)"/>
                                     <div id="loading" class="loading" style="display:none;">
-                                        正在查詢,请稍等...
+                                        extracting now, please wait...
                                     </div>
                                     <!-- <a href="{{ url('/extractor') }}"><h1>Extractor</h1></a> -->
                                     <!-- <a href="{{ url('/record') }}"><h1>Record</h1></a> -->

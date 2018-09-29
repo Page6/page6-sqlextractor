@@ -55,7 +55,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    @if (Auth::user()->name == config('app.admin', 'Admin'))
+                                    @if (Auth::user()->name == config('app.admin', 'admin'))
                                     <li>
                                         <a href="{{ route('register') }}"
                                             onclick="event.preventDefault();

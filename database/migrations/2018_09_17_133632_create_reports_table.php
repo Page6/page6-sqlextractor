@@ -14,10 +14,10 @@ class CreateReportsTable extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('report');
-            $table->string('comment');
+            $table->increments('id')->unique();
+            $table->string('report_name');
+            $table->integer('report_type');
+            $table->string('report_sql');
         });
     }
 
