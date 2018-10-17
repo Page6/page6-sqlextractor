@@ -82,8 +82,8 @@
                 </div>
 
                 <div class="links">
-                    <!--<a href="{{ url('/extractor') }}">Extractor</a>
-                    <a href="https://laravel-news.com">Record</a>
+                    <a href="{{ url('/test') }}">Test</a>
+                    <!--<a href="https://laravel-news.com">Record</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>-->
                 </div>
             </div>

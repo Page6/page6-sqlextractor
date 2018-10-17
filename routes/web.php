@@ -24,3 +24,4 @@ Route::post('/record', 'RecordController@record');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/test', 'TestController@test')->name('test');
